@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mahesh Pattin - Photo Gallery</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            justify-content: center;
+        }
+
+        .logo img {
+            height: 80px;
+            margin-right: 15px;
+        }
+
+        .logo h1 {
+            color: #FF6B00;
+            font-size: 24px;
+        }
+
+        /* Navigation Styles */
+        nav {
+            width: 100%;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        nav ul li {
+            margin: 0 10px;
+            position: relative;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+
+        nav ul li a:hover {
+            color: #FF6B00;
+            background-color: rgba(255, 107, 0, 0.1);
+        }
+
+        /* Dropdown Styles */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            border-radius: 4px;
+            top: 100%;
+            left: 0;
+            min-width: 160px;
+        }
+
+        .dropdown-content a {
+            color: #333;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: rgba(255, 107, 0, 0.1);
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        /* Gallery Page Styles */
+        .page-title {
+            text-align: center;
+            margin: 40px 0 20px;
+            color: #FF6B00;
+            font-size: 32px;
+        }
+
+        .page-description {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            color: #555;
+        }
+
+        /* Gallery Filters */
+        .gallery-filters {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background-color: white;
+            border: 1px solid #ddd;
+            padding: 8px 20px;
+            margin: 5px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background-color: #FF6B00;
+            color: white;
+            border-color: #FF6B00;
+        }
+
+        /* Gallery Grid */
+        .gallery-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .gallery-item {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .gallery-image {
+            position: relative;
+            overflow: hidden;
+            height: 250px;
+        }
+
+        .gallery-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover .gallery-image img {
+            transform: scale(1.05);
+        }
+
+        .gallery-caption {
+            padding: 15px 20px;
+        }
+
+        .gallery-caption h3 {
+            color: #FF6B00;
+            margin-bottom: 8px;
+            font-size: 18px;
+        }
+
+        .gallery-caption p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .gallery-date {
+            color: #999;
+            font-size: 12px;
+            margin-top: 10px;
+            display: block;
+        }
+
+        /* Lightbox Effect */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 30px;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        .lightbox-image {
+            max-width: 100%;
+            max-height: 80vh;
+            display: block;
+            border: 5px solid white;
+        }
+
+        .lightbox-caption {
+            background-color: white;
+            padding: 15px;
+            margin-top: -4px;
+        }
+
+        .lightbox-caption h3 {
+            color: #FF6B00;
+            margin-bottom: 8px;
+        }
+
+        .lightbox-caption p {
+            color: #666;
+        }
+
+        .close-lightbox {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            transform: translateY(-50%);
+        }
+
+        .lightbox-nav button {
+            background-color: rgba(255, 255, 255, 0.3);
+            border: none;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .lightbox-nav button:hover {
+            background-color: rgba(255, 107, 0, 0.7);
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin: 40px 0;
+        }
+
+        .pagination-btn {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #ddd;
+            background-color: white;
+            margin: 0 5px;
+            border-radius: 4px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .pagination-btn:hover, .pagination-btn.active {
+            background-color: #FF6B00;
+            color: white;
+            border-color: #FF6B00;
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 40px 0;
+            margin-top: 40px;
+        }
+
+        .footer-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .footer-left {
+            flex: 1;
+            padding-right: 20px;
+        }
+
+        .footer-left h3 {
+            color: #FF6B00;
+            margin-bottom: 15px;
+        }
+
+        .contact-info p {
+            margin-bottom: 10px;
+        }
+
+        .footer-right {
+            flex: 1;
+            padding-left: 20px;
+        }
+
+        .footer-right h3 {
+            color: #FF6B00;
+            margin-bottom: 15px;
+        }
+
+        .working-hours p {
+            margin-bottom: 10px;
+        }
+
+        /* Upload Button for admins */
+        .admin-controls {
+            text-align: center;
+            margin: 20px 0 40px;
+        }
+
+        .upload-btn {
+            background-color: #FF6B00;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .upload-btn:hover {
+            background-color: #e65c00;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .gallery-container {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .gallery-container {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+
+            .footer-container {
+                flex-direction: column;
+            }
+
+            .footer-right {
+                margin-top: 30px;
+                padding-left: 0;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .gallery-container {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery-image {
+                height: 200px;
+            }
+        }
+        
+    </style>
+
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <img src="/images/logo.photonewDC.png" alt="Mahesh Pattin Logo">
+                <h1>Mahesh Pattin Souhard Sahakari Sangha Niyamit</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="deposits.html">Deposits</a></li>
+                    <li><a href="loans.html">Loans</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li class="dropdown">
+                        <a href="#">Branches</a>
+                        <div class="dropdown-content">
+                            <a href="headoffice.html">Headoffice</a>
+                            <a href="bagalkot.html">Bagalkot Branch</a>
+                            <a href="ilkal.html">Ilkal Branch</a>
+                        </div>
+                    </li>
+                    <li><a href="financial.html">Financial Report</a></li>
+                    <li><a href="gallery.html">Gallery</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <!-- Main Content -->
+    <main class="container">
+        <h1 class="page-title">Photo Gallery</h1>
+        <p class="page-description">Explore our journey through images. Browse through photos of our events, branch openings, community activities, and more.</p>
+
+
+
+        <!-- Gallery Filters -->
+        <div class="gallery-filters">
+            <button class="filter-btn active">All</button>
+            <button class="filter-btn">Events</button>
+            <button class="filter-btn">Branch Openings</button>
+        </div>
+
+        <!-- Gallery Grid -->
+        <div class="gallery-container">
+            <!-- Gallery Item 1 -->
+            <div class="gallery-item" data-category="events">
+                <div class="gallery-image">
+                    <img src="/images/DSC_6194.JPG" alt="Annual Meeting 2023">
+                </div>
+                <div class="gallery-caption">
+                    <h3>Annual General Meeting 2024</h3>
+                </div>
+            </div>
+
+            <!-- Gallery Item 2 -->
+            <div class="gallery-item" data-category="branch-openings">
+                <div class="gallery-image">
+                    <img src="/api/placeholder/400/300" alt="Head Office Opening">
+                </div>
+                <div class="gallery-caption">
+                    <h3>Head Office Inauguration</h3>
+                </div>
+            </div>
+
+            <!-- Gallery Item 3 -->
+            <div class="gallery-item" data-category="branch-openings">
+                <div class="gallery-image">
+                    <img src="/images/BGK OP.jpg" alt="Bagalkot Branch Opening">
+                </div>
+                <div class="gallery-caption">
+                    <h3>Bagalkot Branch Inauguration</h3>
+                </div>
+            </div>
+
+            <!-- Gallery Item 4 -->
+            <div class="gallery-item" data-category="branch-openings">
+                <div class="gallery-image">
+                    <img src="/images/ILKAL OP.JPG" alt="Ilkal Branch Opening">
+                </div>
+                <div class="gallery-caption">
+                    <h3>Ilkal Branch Inauguration</h3>
+                </div>
+            </div>
+
+            <!-- Gallery Item 5 -->
+            <div class="gallery-item" data-category="events">
+                <div class="gallery-image">
+                    <img src="/images/IMG_0247.JPG" alt="Annual Meeting 2023">
+                </div>
+                <div class="gallery-caption">
+                    <h3>Annual General Meeting 2023</h3>
+                </div>
+            </div>
+
+            <!-- Gallery Item 6 -->
+            <div class="gallery-item" data-category="events">
+                <div class="gallery-image">
+                    <img src="/api/placeholder/400/300" alt="Annual Meeting 2023">
+                </div>
+                <div class="gallery-caption">
+                    <h3>Annual General Meeting 2022</h3>
+                </div>
+            </div>
+
+
+
+        <!-- Lightbox for Image Viewing -->
+        <div class="lightbox" id="lightbox">
+            <div class="lightbox-content">
+                <span class="close-lightbox">&times;</span>
+                <img src="" alt="" class="lightbox-image">
+                <div class="lightbox-caption">
+                    <h3>Image Title</h3>
+                    <p>Image description goes here.</p>
+                </div>
+                <div class="lightbox-nav">
+                    <button class="prev-btn">←</button>
+                    <button class="next-btn">→</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="container footer-container">
+            <div class="footer-left">
+                <h3>Contact Information</h3>
+                <div class="contact-info">
+                    <p><strong>Address:</strong> Kabra lane, Near bus stand Banahatti - 587311</p>
+                    <p><strong>Email:</strong> maheshpssnbnt112@gmail.com</p>
+                    <p><strong>Phone:</strong> +91 7760556454</p>
+                </div>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/share/1DGTsz97Rm/" title="Facebook">
+                        <img src="/images/fb-removebg-preview.png" alt="Facebook" width="32" height="32">
+                    </a>
+                    <a href="https://wa.me/917760556454" title="WhatsApp">
+                        <img src="/images/wp-removebg-preview.png" alt="WhatsApp" width="32" height="32">
+                    </a>
+                </div>
+            </div>
+            <div class="footer-right">
+                <h3>Working Hours</h3>
+                <div class="working-hours">
+                    <p><strong>Monday - Friday:</strong> 10:00 AM - 5:30 PM</p>
+                    <p><strong>Saturday:</strong> 10:00 AM - 2:00 PM</p>
+                    <p><strong>Sunday:</strong> Closed</p>
+                    <p><strong>Holidays:</strong> As per banking guidelines</p>
+                </div>
+            </div>
+        </div>
+        <div class="container" style="text-align: center; margin-top: 20px; font-size: 14px; color: #ddd;">
+            <p>Copyright &copy; 2025 Mahesh Pattin Souhard Sahakari Sangha Niyamit | Designed by Yashwardhan Chindak</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Gallery Functionality -->
+    <script>
+        // Gallery Filtering
+        document.addEventListener('DOMContentLoaded', function() {
+            // Filter functionality
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const galleryItems = document.querySelectorAll('.gallery-item');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // Get filter value
+                    const filterValue = this.textContent.toLowerCase();
+                    
+                    // Filter gallery items
+                    galleryItems.forEach(item => {
+                        if (filterValue === 'all') {
+                            item.style.display = 'block';
+                        } else {
+                            const category = item.getAttribute('data-category');
+                            if (category && category.includes(filterValue.replace(' ', '-'))) {
+                                item.style.display = 'block';
+                            } else {
+                                item.style.display = 'none';
+                            }
+                        }
+                    });
+                });
+            });
+            
+            // Lightbox functionality
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImage = document.querySelector('.lightbox-image');
+            const lightboxCaption = document.querySelector('.lightbox-caption');
+            const closeLightbox = document.querySelector('.close-lightbox');
+            
+            galleryItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const imgSrc = this.querySelector('img').src;
+                    const imgTitle = this.querySelector('h3').textContent;
+                    const imgDesc = this.querySelector('p').textContent;
+                    
+                    lightboxImage.src = imgSrc;
+                    lightboxCaption.querySelector('h3').textContent = imgTitle;
+                    lightboxCaption.querySelector('p').textContent = imgDesc;
+                    
+                    lightbox.style.display = 'flex';
+                });
+            });
+            
+            closeLightbox.addEventListener('click', function() {
+                lightbox.style.display = 'none';
+            });
+            
+            lightbox.addEventListener('click', function(e) {
+                if (e.target === lightbox) {
+                    lightbox.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

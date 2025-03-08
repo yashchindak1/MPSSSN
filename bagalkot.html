@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mahesh Pattin - Financial Reports</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .logo img {
+            height: 70px;
+            margin-right: 15px;
+        }
+        
+        .logo h1 {
+            color: #FF6B00;
+            font-size: 28px;
+        }
+        
+        /* Navigation Styles */
+        nav {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            justify-content: center;
+            border-top: 1px solid #eee;
+            padding-top: 10px;
+            width: 100%;
+        }
+        
+        nav ul li {
+            margin: 0 10px;
+            position: relative;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 5px 10px;
+            display: block;
+        }
+        
+        nav ul li a:hover {
+            color: #FF6B00;
+        }
+        
+        /* Dropdown Styles */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            border-radius: 4px;
+            top: 100%;
+            left: 0;
+            min-width: 160px;
+        }
+
+        .dropdown-content a {
+            color: #333;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: rgba(255, 107, 0, 0.1);
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        
+        /* Active Link */
+        .active {
+            color: #FF6B00 !important;
+            font-weight: bold;
+        }
+
+        /* Page Header */
+        .page-header {
+            text-align: center;
+            padding: 40px 0;
+        }
+        
+        .page-header h2 {
+            color: #FF6B00;
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+        
+        .page-header p {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Chairman Message Section */
+        .chairman-section {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+        }
+        
+        .chairman-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        
+        .chairman-image {
+            flex: 1;
+            min-width: 300px;
+            max-width: 400px;
+        }
+        
+        .chairman-image img {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .chairman-text {
+            flex: 2;
+            min-width: 300px;
+        }
+        
+        .chairman-text h3 {
+            color: #FF6B00;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        
+        .chairman-text p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .signature {
+            margin-top: 20px;
+            font-style: italic;
+        }
+        
+        /* Board of Directors Section */
+        .directors-section {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+        }
+        
+        .directors-section h3 {
+            color: #FF6B00;
+            margin-bottom: 30px;
+            font-size: 24px;
+            text-align: center;
+        }
+        
+        .directors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .director-member {
+            text-align: center;
+            padding: 15px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .director-member:hover {
+            background-color: rgba(255, 107, 0, 0.05);
+        }
+        
+        /* Changed from circle to rectangle */
+        .director-member img {
+            width: 150px;
+            height: 180px;
+            object-fit: cover;
+            margin-bottom: 10px;
+            border: 3px solid #FF6B00;
+            border-radius: 8px;
+        }
+        
+        .director-member h4 {
+            margin-bottom: 5px;
+            color: #FF6B00;
+        }
+        
+        .director-member p {
+            color: #666;
+        }
+        
+        /* Advisory Committee Section */
+        .committee-section {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+        }
+        
+        .committee-section h3 {
+            color: #FF6B00;
+            margin-bottom: 30px;
+            font-size: 24px;
+            text-align: center;
+        }
+        
+        .committee-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .committee-member {
+            text-align: center;
+            padding: 15px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .committee-member:hover {
+            background-color: rgba(255, 107, 0, 0.05);
+        }
+        
+        /* Changed from circle to rectangle */
+        .committee-member img {
+            width: 150px;
+            height: 180px;
+            object-fit: cover;
+            margin-bottom: 10px;
+            border: 3px solid #FF6B00;
+            border-radius: 8px;
+        }
+        
+        .committee-member h4 {
+            margin-bottom: 5px;
+            color: #FF6B00;
+        }
+        
+        .committee-member p {
+            color: #666;
+        }
+        
+        /* CEO Section */
+        .ceo-section {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+        }
+        
+        .ceo-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .ceo-section h3 {
+            color: #FF6B00;
+            margin-bottom: 30px;
+            font-size: 24px;
+            text-align: center;
+        }
+        
+        .ceo-image {
+            flex: 1;
+            min-width: 250px;
+            max-width: 300px;
+            text-align: center;
+        }
+        
+        .ceo-section {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+        }
+        
+        .ceo-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .ceo-section h3 {
+            color: #FF6B00;
+            margin-bottom: 30px;
+            font-size: 24px;
+            text-align: center;
+        }
+        
+        .ceo-image {
+            flex: 1;
+            min-width: 250px;
+            max-width: 300px;
+            text-align: center;
+        }
+        
+        .ceo-image img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 10px;
+            border: 3px solid #FF6B00;
+        }
+        
+        .ceo-info {
+            flex: 2;
+            min-width: 300px;
+            text-align: center;
+        }
+        
+        .ceo-info h4 {
+            color: #FF6B00;
+            font-size: 22px;
+            margin-bottom: 5px;
+        }
+        
+        .ceo-info p {
+            color: #666;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        
+        .ceo-contact {
+            font-weight: bold;
+            margin-top: 15px;
+        }
+        
+        
+        /* Achievements Section */
+        .achievements-section {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+        }
+        
+        .achievements-section h3 {
+            color: #FF6B00;
+            margin-bottom: 20px;
+            font-size: 24px;
+            text-align: center;
+        }
+        
+        .achievements-list {
+            list-style-type: none;
+        }
+        
+        .achievements-list li {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+        }
+        
+        .achievements-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .achievements-list li:before {
+            content: "•";
+            color: #FF6B00;
+            font-weight: bold;
+            display: inline-block; 
+            width: 20px;
+            margin-left: -10px;
+            font-size: 20px;
+        }
+        
+        /* Footer Styles */
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 40px 0;
+            margin-top: 40px;
+        }
+        
+        .footer-container {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .footer-left {
+            flex: 1;
+            padding-right: 20px;
+        }
+        
+        .footer-left h3 {
+            color: #FF6B00;
+            margin-bottom: 15px;
+        }
+        
+        .contact-info p {
+            margin-bottom: 10px;
+        }
+        
+        .social-links {
+            display: flex;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: inline-block;
+            height: 40px;
+            width: 40px;
+            background-color: #FF6B00;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            margin-right: 10px;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            background-color: white;
+            color: #FF6B00;
+        }
+        
+        .footer-right {
+            flex: 1;
+            padding-left: 20px;
+        }
+        
+        .footer-right h3 {
+            color: #FF6B00;
+            margin-bottom: 15px;
+        }
+        
+        .working-hours p {
+            margin-bottom: 10px;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+            }
+            
+            nav ul {
+                margin-top: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 5px;
+            }
+            
+            .chairman-content, .ceo-content {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .chairman-image, .ceo-image {
+                max-width: 100%;
+            }
+            
+            .footer-container {
+                flex-direction: column;
+            }
+            
+            .footer-right {
+                margin-top: 30px;
+                padding-left: 0;
+            }
+            
+            /* Mobile dropdown adjustments */
+            .dropdown-content {
+                position: static;
+                display: none;
+                width: 100%;
+                box-shadow: none;
+                padding: 0;
+                margin-top: 5px;
+            }
+            
+            .dropdown:hover .dropdown-content {
+                display: block;
+            }
+            
+            .dropdown-content a {
+                padding-left: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <img src="/images/logo.photonewDC.png" alt="Mahesh Pattin Logo">
+                <h1>Mahesh Pattin Souhard Sahakari Sangha Niyamit</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="deposits.html">Deposits</a></li>
+                    <li><a href="loans.html">Loans</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li class="dropdown">
+                        <a href="#">Branches</a>
+                        <div class="dropdown-content">
+                            <a href="headoffice.html">Headoffice</a>
+                            <a href="bagalkot.html">Bagalkot Branch</a>
+                            <a href="ilkal.html">Ilkal Branch</a>
+                        </div>
+                    </li>
+                    <li><a href="financial.html">Financial Report</a></li>
+                    <li><a href="gallery.html">Gallery</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+
+    <!-- Advisory Committee Section -->
+    <section class="container committee-section">
+        <h3>Bagalkot Branch Advisory Committee</h3>
+        <div class="committee-grid">
+            <div class="committee-member">
+                <img src="/images/104.jpg" alt="Dwarakadas R Kasat">
+                <h4>Dwarakadas R Kasat</h4>
+                <p>Advisory Committee President</p>
+            </div>
+            <div class="committee-member">
+                <img src="/images/sagar photo.jpg" alt="CA Sagar S Somani">
+                <h4>CA Sagar S Somani</h4>
+                <p>Advisory Committee Member</p>
+            </div>
+            <div class="committee-member">
+                <img src="/images/pavan r kasat.jpg" alt="Pavan R Kasat">
+                <h4>Pavan R Kasat</h4>
+                <p>Advisory Committee Member</p>
+            </div>
+            <div class="committee-member">
+                <img src="/images/ashok kabra.jpg" alt="Ashok B Kabara">
+                <h4>Ashok B Kabara</h4>
+                <p>Advisory Committee Member</p>
+            </div>
+            <div class="committee-member">
+                <img src="/images/sachin rathi.jpg" alt="Sachin B Rathi">
+                <h4>Sachin B Rathi</h4>
+                <p>Advisory Committee Member</p>
+            </div>
+        </div>
+    </section>
+     
+
+
+        <section class="container ceo-section">
+            <h3>Branch Manager</h3>
+            <div class="ceo-content">
+                <div class="ceo-image">
+                    <img src="/images/nurandappa bavikatti.jpg" alt="Noorandappa R Bhavikatti">
+                </div>
+                <div class="ceo-info">
+                    <h4>Noorandappa R Bhavikatti</h4>
+                    <p>Branch Manager</p>
+                    <p class="ceo-contact">Contact: +91 7411506454 / +91 7996703003</p>
+                </div>
+            </div>
+        </section>
+    <!-- Footer Section -->
+    <footer>
+        <div class="container footer-container">
+            <div class="footer-left">
+                <h3>Contact Information</h3>
+                <div class="contact-info">
+                    <p><strong>Address:</strong> Kabra lane, Near bus stand Banahatti - 587311</p>
+                    <p><strong>Email:</strong> maheshpssnbnt112@gmail.com</p>
+                    <p><strong>Phone:</strong> +91 7760556454</p>
+                </div>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/share/1DGTsz97Rm/" title="Facebook">
+                        <img src="/images/fb-removebg-preview.png" alt="Facebook" width="32" height="32">
+                    </a>
+                    <a href="https://wa.me/917760556454" title="WhatsApp">
+                        <img src="/images/wp-removebg-preview.png" alt="WhatsApp" width="32" height="32">
+                    </a>
+                </div>
+            </div>
+            <div class="footer-right">
+                <h3>Working Hours</h3>
+                <div class="working-hours">
+                    <p><strong>Monday - Friday:</strong> 10:00 AM - 5:30 PM</p>
+                    <p><strong>Saturday:</strong> 10:00 AM - 2:00 PM</p>
+                    <p><strong>Sunday:</strong> Closed</p>
+                    <p><strong>Holidays:</strong> As per banking guidelines</p>
+                </div>
+            </div>
+        </div>
+        <div class="container" style="text-align: center; margin-top: 20px; font-size: 14px; color: #ddd;">
+            <p>Copyright &copy; 2025 Mahesh Pattin Souhard Sahakari Sangha Niyamit | Designed by Yashwardhan Chindak</p>
+        </div>
+    </footer>

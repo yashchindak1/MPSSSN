@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mahesh Pattin - Financial Reports</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            justify-content: center;
+        }
+
+        .logo img {
+            height: 80px;
+            margin-right: 15px;
+        }
+
+        .logo h1 {
+            color: #FF6B00;
+            font-size: 24px;
+        }
+
+        /* Navigation Styles */
+        nav {
+            width: 100%;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        nav ul li {
+            margin: 0 10px;
+            position: relative;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+
+        nav ul li a:hover {
+            color: #FF6B00;
+            background-color: rgba(255, 107, 0, 0.1);
+        }
+
+        /* Dropdown Styles */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            border-radius: 4px;
+            top: 100%;
+            left: 0;
+            min-width: 160px;
+        }
+
+        .dropdown-content a {
+            color: #333;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: rgba(255, 107, 0, 0.1);
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        
+        /* Page Header */
+        .page-header {
+            text-align: center;
+            padding: 40px 0;
+        }
+        
+        .page-header h2 {
+            color: #FF6B00;
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+        
+        .page-header p {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+   
+        /* Deposit Table */
+        .deposit-section {
+            padding: 20px 0;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+        }
+        
+        .deposit-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .deposit-table th {
+            background-color: #FF6B00;
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+        
+        .deposit-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .deposit-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .deposit-table tr:hover {
+            background-color: rgba(255, 107, 0, 0.05);
+        }
+        
+        /* Section Title */
+        .section-title {
+            text-align: center;
+            color: #FF6B00;
+            margin: 20px 0;
+            font-size: 24px;
+        }
+        
+        /* Footer Styles */
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 40px 0;
+            margin-top: 40px;
+        }
+        
+        .footer-container {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .footer-left {
+            flex: 1;
+            padding-right: 20px;
+        }
+        
+        .footer-left h3 {
+            color: #FF6B00;
+            margin-bottom: 15px;
+        }
+        
+        .contact-info p {
+            margin-bottom: 10px;
+        }
+        
+        .social-links {
+            display: flex;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: inline-block;
+            height: 40px;
+            width: 40px;
+            background-color: #FF6B00;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            margin-right: 10px;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            background-color: white;
+            color: #FF6B00;
+        }
+        
+        .footer-right {
+            flex: 1;
+            padding-left: 20px;
+        }
+        
+        .footer-right h3 {
+            color: #FF6B00;
+            margin-bottom: 15px;
+        }
+        
+        .working-hours p {
+            margin-bottom: 10px;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+            }
+            
+            nav ul {
+                margin-top: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 5px;
+            }
+            
+            .footer-container {
+                flex-direction: column;
+            }
+            
+            .footer-right {
+                margin-top: 30px;
+                padding-left: 0;
+            }
+            
+            .deposit-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <img src="/images/logo.photonewDC.png" alt="Mahesh Pattin Logo">
+                <h1>Mahesh Pattin Souhard Sahakari Sangha Niyamit</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="deposits.html">Deposits</a></li>
+                    <li><a href="loans.html">Loans</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li class="dropdown">
+                        <a href="#">Branches</a>
+                        <div class="dropdown-content">
+                            <a href="headoffice.html">Headoffice</a>
+                            <a href="bagalkot.html">Bagalkot Branch</a>
+                            <a href="ilkal.html">Ilkal Branch</a>
+                        </div>
+                    </li>
+                    <li><a href="financial.html">Financial Report</a></li>
+                    <li><a href="gallery.html">Gallery</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="container page-header">
+        <h2>RATE OF INTEREST ON DEPOSIT </h2>
+        <p>Mahesh Pattin Souhard Sahakari Sangha Niyamit offers various deposit schemes with competitive interest rates to help you grow your savings. Choose the right deposit option that suits your financial goals.</p>
+    </section>
+
+    <!-- Regular Deposits Table Section -->
+    <section class="container">
+        <h3 class="section-title">DEPOSITS</h3>
+        <div class="deposit-section">
+            <table class="deposit-table">
+                <thead>
+                    <tr>
+                        <th>S No</th>
+                        <th>Particulars</th>
+                        <th>Normal ROI</th>
+                        <th>For Senior Citizens</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>15 DAYS TO 44 DAYS</td>
+                        <td>4 %</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>45 DAYS TO 90 DAYS</td>
+                        <td>6 %</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>91 DAYS TO 180 DAYS</td>
+                        <td>7 %</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>181 DAYS TO 364 DAYS</td>
+                        <td>8 %</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>ABOVE 1 YEAR</td>
+                        <td>10 %</td>
+                        <td>10.5 %</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>FIX DEPOSIT (MIS)</td>
+                        <td>9 %</td>
+                        <td>9.5 %</td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>MAHESH CASH CERTIFICATE (Double scheme)</td>
+                        <td>84 months</td>
+                        <td>81 months</td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>SAVINGS ACCOUNT</td>
+                        <td>4 %</td>
+                        <td>-</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Recurring Deposit Table Section -->
+    <section class="container">
+        <h3 class="section-title">RECURRING DEPOSIT (RD)</h3>
+        <div class="deposit-section">
+            <table class="deposit-table">
+                <thead>
+                    <tr>
+                        <th>Monthly Amt</th>
+                        <th>1 year</th>
+                        <th>2 year</th>
+                        <th>3 year</th>
+                        <th>4 year</th>
+                        <th>5 year</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td>9 %</td>
+                        <td>9.5 %</td>
+                        <td>10 %</td>
+                        <td>10 %</td>
+                        <td>10 %</td>
+                    </tr>
+                    <tr>
+                        <td>500</td>
+                        <td>6299</td>
+                        <td>13253</td>
+                        <td>21038</td>
+                        <td>29555</td>
+                        <td>38956</td>
+                    </tr>
+                    <tr>
+                        <td>1000</td>
+                        <td>12597</td>
+                        <td>26506</td>
+                        <td>42076</td>
+                        <td>59110</td>
+                        <td>77911</td>
+                    </tr>
+                    <tr>
+                        <td>2000</td>
+                        <td>25195</td>
+                        <td>53012</td>
+                        <td>84153</td>
+                        <td>118219</td>
+                        <td>155822</td>
+                    </tr>
+                    <tr>
+                        <td>3000</td>
+                        <td>37792</td>
+                        <td>79517</td>
+                        <td>126229</td>
+                        <td>177329</td>
+                        <td>233734</td>
+                    </tr>
+                    <tr>
+                        <td>4000</td>
+                        <td>50389</td>
+                        <td>106023</td>
+                        <td>168306</td>
+                        <td>236439</td>
+                        <td>311645</td>
+                    </tr>
+                    <tr>
+                        <td>5000</td>
+                        <td>62986</td>
+                        <td>132529</td>
+                        <td>210382</td>
+                        <td>295548</td>
+                        <td>389556</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="container footer-container">
+            <div class="footer-left">
+                <h3>Contact Information</h3>
+                <div class="contact-info">
+                    <p><strong>Address:</strong> Kabra lane, Near bus stand Banahatti - 587311</p>
+                    <p><strong>Email:</strong> maheshpssnbnt112@gmail.com</p>
+                    <p><strong>Phone:</strong> +91 7760556454</p>
+                </div>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/share/1DGTsz97Rm/" title="Facebook">
+                        <img src="/images/fb-removebg-preview.png" alt="Facebook" width="32" height="32">
+                    </a>
+                    <a href="https://wa.me/917760556454" title="WhatsApp">
+                        <img src="/images/wp-removebg-preview.png" alt="WhatsApp" width="32" height="32">
+                    </a>
+                </div>
+            </div>
+            <div class="footer-right">
+                <h3>Working Hours</h3>
+                <div class="working-hours">
+                    <p><strong>Monday - Friday:</strong> 10:00 AM - 5:30 PM</p>
+                    <p><strong>Saturday:</strong> 10:00 AM - 2:00 PM</p>
+                    <p><strong>Sunday:</strong> Closed</p>
+                    <p><strong>Holidays:</strong> As per banking guidelines</p>
+                </div>
+            </div>
+        </div>
+        <div class="container" style="text-align: center; margin-top: 20px; font-size: 14px; color: #ddd;">
+            <p>Copyright &copy; 2025 Mahesh Pattin Souhard Sahakari Sangha Niyamit | Designed by Yashwardhan Chindak</p>
+        </div>
+    </footer>
+    
+</body>
+</html>

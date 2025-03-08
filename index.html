@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mahesh Pattin Souhard Sahakari Sangha Niyamit - Home</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            display: flex;
+            flex-direction: column; /* Changed from row to column */
+            align-items: center;
+            padding: 10px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px; /* Add space between logo and navigation */
+            justify-content: center; /* Center the logo and text */
+        }
+
+        .logo img {
+            height: 80px; /* Increased from 50px */
+            margin-right: 15px;
+        }
+
+        .logo h1 {
+            color: #FF6B00;
+            font-size: 24px;
+        }
+
+        /* Navigation Styles */
+        nav {
+            width: 100%;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            justify-content: center; /* Center the navigation items */
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+        }
+
+        nav ul li {
+            margin: 0 10px; /* Equal margin on both sides for better spacing */
+            position: relative;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+
+        nav ul li a:hover {
+            color: #FF6B00;
+            background-color: rgba(255, 107, 0, 0.1);
+        }
+
+        /* Dropdown Styles */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            border-radius: 4px;
+            top: 100%;
+            left: 0;
+            min-width: 160px;
+        }
+
+        .dropdown-content a {
+            color: #333;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: rgba(255, 107, 0, 0.1);
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Slider/Banner Styles */
+        .slider-container {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            overflow: hidden;
+            margin-bottom: 40px;
+        }
+
+        .slider {
+            width: 300%;
+            height: 100%;
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .slide {
+            width: 33.33%;
+            height: 100%;
+            position: relative;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .slide-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+        }
+
+        .slide-content h2 {
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+
+        .slide-content p {
+            font-size: 18px;
+            max-width: 600px;
+            margin-bottom: 20px;
+        }
+
+        .slide-btn {
+            background-color: #FF6B00;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .slide-btn:hover {
+            background-color: white;
+            color: #FF6B00;
+        }
+
+        .slider-dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            background-color: rgba(255, 255, 255, 0.5);
+            margin: 0 5px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .dot.active {
+            background-color: #FF6B00;
+        }
+
+        /* About Us Section */
+        .about-section {
+            display: flex;
+            align-items: center;
+            padding: 40px 0;
+            margin-bottom: 40px;
+        }
+
+        .about-content {
+            flex: 2;
+            padding-right: 30px;
+        }
+
+        .about-content h2 {
+            color: #FF6B00;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .about-content p {
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .about-btn {
+            display: inline-block;
+            background-color: #FF6B00;
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .about-btn:hover {
+            background-color: #e66000;
+        }
+
+        .about-logo {
+            flex: 1;
+            text-align: center;
+        }
+
+        .about-logo img {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+
+        /* Branches Section */
+        .branches-section {
+            padding: 40px 0;
+            background-color: #f9f9f9;
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            text-align: center;
+            color: #FF6B00;
+            font-size: 28px;
+            margin-bottom: 30px;
+        }
+
+        .branches-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .branch-card {
+            width: 32%;
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .branch-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .branch-image {
+            height: 200px;
+        }
+
+        .branch-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .branch-details {
+            padding: 20px;
+        }
+
+        .branch-details h3 {
+            color: #FF6B00;
+            margin-bottom: 10px;
+        }
+
+        .branch-details p {
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .branch-btn {
+            display: inline-block;
+            background-color: #FF6B00;
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .branch-btn:hover {
+            background-color: #e66000;
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 40px 0;
+            margin-top: 40px;
+        }
+
+        .footer-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .footer-left {
+            flex: 1;
+            padding-right: 20px;
+        }
+
+        .footer-left h3 {
+            color: #FF6B00;
+            margin-bottom: 15px;
+        }
+
+        .contact-info p {
+            margin-bottom: 10px;
+        }
+
+        .footer-right {
+            flex: 1;
+            padding-left: 20px;
+        }
+
+        .footer-right h3 {
+            color: #FF6B00;
+            margin-bottom: 15px;
+        }
+
+        .working-hours p {
+            margin-bottom: 10px;
+        }
+
+        /* Upload Button for admins */
+        .admin-controls {
+            text-align: center;
+            margin: 20px 0 40px;
+        }
+
+        .upload-btn {
+            background-color: #FF6B00;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .upload-btn:hover {
+            background-color: #e65c00;
+        }
+
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+            }
+
+            nav ul {
+                margin-top: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            nav ul li {
+                margin: 5px;
+            }
+
+            .about-section {
+                flex-direction: column;
+            }
+
+            .about-content {
+                padding-right: 0;
+                margin-bottom: 20px;
+            }
+
+            .branch-card {
+                width: 100%;
+            }
+
+            .footer-container {
+                flex-direction: column;
+            }
+
+            .footer-right {
+                margin-top: 30px;
+                padding-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <img src="/images/logo.photonewDC.png" alt="Mahesh Pattin Logo">
+                <h1>Mahesh Pattin Souhard Sahakari Sangha Niyamit</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="deposits.html">Deposits</a></li>
+                    <li><a href="loans.html">Loans</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li class="dropdown">
+                        <a href="#">Branches</a>
+                        <div class="dropdown-content">
+                            <a href="headoffice.html">Headoffice</a>
+                            <a href="bagalkot.html">Bagalkot Branch</a>
+                            <a href="ilkal.html">Ilkal Branch</a>
+                        </div>
+                    </li>
+                    <li><a href="financial.html">Financial Report</a></li>
+                    <li><a href="gallery.html">Gallery</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Slider/Banner Section -->
+    <div class="slider-container">
+        <div class="slider" id="slider">
+            <div class="slide">
+                <img src="/images/BNTB.jpg" alt="Bank Building">
+                
+            </div>
+            <div class="slide">
+                <img src="/images/Business loan.jpeg" alt="Deposit Services">
+                >
+                </div>
+            </div>
+            <div class="slide">
+                <img src="/images/1309367304.jpg" alt="Loan Services">
+               >
+            </div>
+        </div>
+        <div class="slider-dots">
+            <div class="dot active" onclick="currentSlide(0)"></div>
+            <div class="dot" onclick="currentSlide(1)"></div>
+            <div class="dot" onclick="currentSlide(2)"></div>
+        </div>
+    </div>
+
+    <!-- About Us Section -->
+    <section class="container about-section">
+        <div class="about-content">
+            <h2>About Us</h2>
+            <p>Mahesh Pattin Souhard Sahakari Sangha Niyamit is a trusted cooperative society established to provide financial support and services to our members and community. With decades of experience in the banking sector, we offer a wide range of services including deposits, loans, and more.</p>
+            <p>Our mission is to promote financial inclusion and empower our members through reliable and customer-friendly banking services. We are committed to the economic development of our community by offering competitive interest rates and personalized financial solutions.</p>
+            <a href="about.html" class="about-btn">Know More</a>
+        </div>
+        <div class="about-logo">
+            <img src="/images/logo.photonewDC.png" alt="Mahesh Pattin Logo">
+        </div>
+    </section>
+
+    <!-- Branches Section -->
+    <section class="branches-section">
+        <div class="container">
+            <h2 class="section-title">Our Branches</h2>
+            <div class="branches-container">
+                <!-- Branch 1 -->
+                <div class="branch-card">
+                    <div class="branch-image">
+                        <img src="/images/BNTB.jpg" alt="Main Branch">
+                    </div>
+                    <div class="branch-details">
+                        <h3>Banahatti Head office</h3>
+                        <p><strong>Address:</strong> Kabra lane, Near bus stand Banahatti - 587311</p>
+                        <p><strong>Phone:</strong> +91 7760556454</p>
+                        <p><strong>Timing:</strong> 10:00 AM - 5:30 PM (Monday-Friday)</p>
+                        <a href="headoffice.html" class="branch-btn">View Details</a>
+                    </div>
+                </div>
+
+                <!-- Branch 2 -->
+                <div class="branch-card">
+                    <div class="branch-image">
+                        <img src="/images/bgk.jpg" alt=" Branch">
+                    </div>
+                    <div class="branch-details">
+                        <h3>Bagalkote</h3>
+                        <p><strong>Address:</strong>UG-39 Melligeri towers station Road Bagalkote - 587301</p>
+                        <p><strong>Phone:</strong> +91 7411506454</p>
+                        <p><strong>Timing:</strong> 10:00 AM - 5:30 PM (Monday-Friday)</p>
+                        <a href="bagalkot.html" class="branch-btn">View Details</a>
+                    </div>
+                </div>
+
+                <!-- Branch 3 -->
+                <div class="branch-card">
+                    <div class="branch-image">
+                        <img src="/images/0J0A9894.JPG" alt=" Branch">
+                    </div>
+                    <div class="branch-details">
+                        <h3>Ilkal Branch</h3>
+                        <p><strong>Address:</strong> Karwa building near mahantesh talkies Ilkal -587125</p>
+                        <p><strong>Phone:</strong> +91 9538556454</p>
+                        <p><strong>Timing:</strong> 10:00 AM - 5:30 PM (Monday-Friday)</p>
+                        <a href="ilkal.html" class="branch-btn">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="container footer-container">
+            <div class="footer-left">
+                <h3>Contact Information</h3>
+                <div class="contact-info">
+                    <p><strong>Address:</strong> Kabra lane, Near bus stand Banahatti - 587311</p>
+                    <p><strong>Email:</strong> maheshpssnbnt112@gmail.com</p>
+                    <p><strong>Phone:</strong> +91 7760556454</p>
+                </div>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/share/1DGTsz97Rm/" title="Facebook">
+                        <img src="/images/fb-removebg-preview.png" alt="Facebook" width="32" height="32">
+                    </a>
+                    <a href="https://wa.me/917760556454" title="WhatsApp">
+                        <img src="/images/wp-removebg-preview.png" alt="WhatsApp" width="32" height="32">
+                    </a>
+                </div>
+            </div>
+            <div class="footer-right">
+                <h3>Working Hours</h3>
+                <div class="working-hours">
+                    <p><strong>Monday - Friday:</strong> 10:00 AM - 5:30 PM</p>
+                    <p><strong>Saturday:</strong> 10:00 AM - 2:00 PM</p>
+                    <p><strong>Sunday:</strong> Closed</p>
+                    <p><strong>Holidays:</strong> As per banking guidelines</p>
+                </div>
+            </div>
+        </div>
+        <div class="container" style="text-align: center; margin-top: 20px; font-size: 14px; color: #ddd;">
+            <p>Copyright &copy; 2025 Mahesh Pattin Souhard Sahakari Sangha Niyamit | Designed by Yashwardhan Chindak</p>
+        </div>
+    </footer>
+
+    <script>
+        // Slider functionality
+        let currentSlideIndex = 0;
+        const slider = document.getElementById('slider');
+        const dots = document.querySelectorAll('.dot');
+
+        // Show initial slide
+        showSlide(currentSlideIndex);
+
+        // Automatic slide change
+        setInterval(() => {
+            currentSlideIndex = (currentSlideIndex + 1) % 3;
+            showSlide(currentSlideIndex);
+        }, 5000);
+
+        function showSlide(index) {
+            slider.style.transform = `translateX(-${index * 33.33}%)`;
+
+            // Update active dot
+            dots.forEach((dot, i) => {
+                if (i === index) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
+
+        function currentSlide(index) {
+            currentSlideIndex = index;
+            showSlide(currentSlideIndex);
+        }
+    </script>
+</body>
+</html>

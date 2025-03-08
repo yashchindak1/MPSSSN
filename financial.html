@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mahesh Pattin - Financial Reports</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            justify-content: center;
+        }
+
+        .logo img {
+            height: 80px;
+            margin-right: 15px;
+        }
+
+        .logo h1 {
+            color: #FF6B00;
+            font-size: 24px;
+        }
+
+        /* Navigation Styles */
+        nav {
+            width: 100%;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        nav ul li {
+            margin: 0 10px;
+            position: relative;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+
+        nav ul li a:hover {
+            color: #FF6B00;
+            background-color: rgba(255, 107, 0, 0.1);
+        }
+
+        /* Dropdown Styles */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            border-radius: 4px;
+            top: 100%;
+            left: 0;
+            min-width: 160px;
+        }
+
+        .dropdown-content a {
+            color: #333;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: rgba(255, 107, 0, 0.1);
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        /* Financial Report Styles */
+        .page-title {
+            text-align: center;
+            margin: 40px 0;
+            color: #FF6B00;
+            font-size: 32px;
+        }
+
+        .subtitle {
+            text-align: center;
+            margin: -20px 0 40px;
+            font-size: 20px;
+            color: #555;
+        }
+
+        .financial-summary {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+
+        .financial-summary h2 {
+            color: #FF6B00;
+            margin-bottom: 20px;
+            font-size: 24px;
+            border-bottom: 2px solid #FF6B00;
+            padding-bottom: 10px;
+        }
+
+        .financial-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+
+        .financial-table th, .financial-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .financial-table th {
+            background-color: #FF6B00;
+            color: white;
+            font-weight: 600;
+        }
+
+        .financial-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .financial-table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: #FF6B00;
+        }
+
+        .additional-info {
+            margin-top: 30px;
+        }
+
+        .info-list {
+            list-style-type: none;
+        }
+
+        .info-list li {
+            margin-bottom: 15px;
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .info-list li:before {
+            content: "➤";
+            position: absolute;
+            left: 0;
+            color: #FF6B00;
+        }
+
+        .download-section {
+            margin: 40px 0;
+            text-align: center;
+        }
+
+        .download-btn {
+            display: inline-block;
+            background-color: #FF6B00;
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+
+        .download-btn:hover {
+            background-color: #e65c00;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .download-btn i {
+            margin-right: 8px;
+        }
+
+        /* Progress Section */
+        .progress-section {
+            padding: 40px 0;
+            background-color: #f9f9f9;
+            margin-bottom: 40px;
+            border-radius: 8px;
+        }
+
+        .growth-chart {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .chart-item {
+            text-align: center;
+            width: 200px;
+            margin-bottom: 30px;
+        }
+
+        .chart-value {
+            font-size: 28px;
+            font-weight: bold;
+            color: #FF6B00;
+            margin-bottom: 10px;
+        }
+
+        .chart-label {
+            font-size: 16px;
+            color: #555;
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 40px 0;
+            margin-top: 40px;
+        }
+
+        .footer-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .footer-left {
+            flex: 1;
+            padding-right: 20px;
+        }
+
+        .footer-left h3 {
+            color: #FF6B00;
+            margin-bottom: 15px;
+        }
+
+        .contact-info p {
+            margin-bottom: 10px;
+        }
+
+        .footer-right {
+            flex: 1;
+            padding-left: 20px;
+        }
+
+        .footer-right h3 {
+            color: #FF6B00;
+            margin-bottom: 15px;
+        }
+
+        .working-hours p {
+            margin-bottom: 10px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .financial-table {
+                display: block;
+                overflow-x: auto;
+            }
+
+            .footer-container {
+                flex-direction: column;
+            }
+
+            .footer-right {
+                margin-top: 30px;
+                padding-left: 0;
+            }
+
+            .chart-item {
+                width: 45%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <img src="/images/logo.photonewDC.png" alt="Mahesh Pattin Logo">
+                <h1>Mahesh Pattin Souhard Sahakari Sangha Niyamit</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="deposits.html">Deposits</a></li>
+                    <li><a href="loans.html">Loans</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li class="dropdown">
+                        <a href="#">Branches</a>
+                        <div class="dropdown-content">
+                            <a href="headoffice.html">Headoffice</a>
+                            <a href="bagalkot.html">Bagalkot Branch</a>
+                            <a href="ilkal.html">Ilkal Branch</a>
+                        </div>
+                    </li>
+                    <li><a href="financial.html">Financial Report</a></li>
+                    <li><a href="gallery.html">Gallery</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <!-- Main Content -->
+    <main class="container">
+        <h1 class="page-title">Financial Reports</h1>
+        <p class="subtitle">Transparency and Growth: Our Financial Journey</p>
+
+        <!-- Financial Summary Section -->
+        <section class="financial-summary">
+            <h2>Last 4 Financial Years Details</h2>
+            <div class="table-responsive">
+                <table class="financial-table">
+                    <thead>
+                        <tr>
+                            <th>S NO</th>
+                            <th>F-YEAR</th>
+                            <th>MEMBERS</th>
+                            <th>SHARE CAPITAL</th>
+                            <th>DEPOSITS</th>
+                            <th>LOANS</th>
+                            <th>PROFIT</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>2020-21</td>
+                            <td>1086</td>
+                            <td>₹20,10,000</td>
+                            <td>₹0</td>
+                            <td>₹0</td>
+                            <td>₹2,49,450</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>2021-22</td>
+                            <td>1342</td>
+                            <td>₹38,50,000</td>
+                            <td>₹7,91,15,913</td>
+                            <td>₹6,04,49,545</td>
+                            <td>₹5,50,313</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>2022-23</td>
+                            <td>1387</td>
+                            <td>₹45,83,000</td>
+                            <td>₹11,56,63,149</td>
+                            <td>₹7,85,66,697</td>
+                            <td>₹30,27,058</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>2023-24</td>
+                            <td>1638</td>
+                            <td>₹61,37,500</td>
+                            <td>₹17,70,61,483</td>
+                            <td>₹12,75,07,200</td>
+                            <td>₹44,14,244</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="additional-info">
+                <ul class="info-list">
+                    <li>Established on 25-03-2021</li>
+                    <li>Scope of Work - 'BAGALKOTE, BELAGAVI, VIJAYAPUR, HUBLI-DHARWAD, KALBURGI, BIDAR, BALLARI, RAICHUR, KOPPAL, GADAG, YADAGIR, & BANGALURU</li>
+                    <li>Total Branches: 2 - BAGALKOTE & ILKAL</li>
+                    <li>Current Members - 1791</li>
+                    <li>Current Total Shares Capital: ₹8080500</li>
+                    <li>Current Deposits: ₹25,62,28,579</li>
+                    <li>Current Loans: ₹21,20,00,000</li>
+                    <li class="highlight">15% Dividend Declared in Financial Year 2022-23</li>
+                    <li class="highlight">20% Dividend Declared in Financial Year 2023-24</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Growth Progress Section -->
+        <section class="progress-section">
+            <h2 class="section-title">Our Growth Progress</h2>
+            <div class="growth-chart">
+                <div class="chart-item">
+                    <div class="chart-value">1791</div>
+                    <div class="chart-label">Current Members</div>
+                </div>
+                <div class="chart-item">
+                    <div class="chart-value">₹80.8L</div>
+                    <div class="chart-label">Share Capital</div>
+                </div>
+                <div class="chart-item">
+                    <div class="chart-value">₹25.62Cr</div>
+                    <div class="chart-label">Total Deposits</div>
+                </div>
+                <div class="chart-item">
+                    <div class="chart-value">₹21.2Cr</div>
+                    <div class="chart-label">Total Loans</div>
+                </div>
+                <div class="chart-item">
+                    <div class="chart-value">20%</div>
+                    <div class="chart-label">Latest Dividend</div>
+                </div>
+                <div class="chart-item">
+                    <div class="chart-value">₹44.14L</div>
+                    <div class="chart-label">Latest Profit</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Download Section -->
+        <section class="download-section">
+            <h2 class="section-title">Detailed Financial Documents</h2>
+            <p>Download our detailed financial statements for complete information</p>
+            <div class="download-options">
+                <a href="/downloads/profit and loss account .pdf " class="download-btn">
+                    <i class="fa fa-file-pdf-o"></i> Profit & Loss Statement 2023-24
+                </a>
+                <a href="/downloads/balance sheet.pdf" class="download-btn">
+                    <i class="fa fa-file-pdf-o"></i> Balance Sheet 2023-24
+                </a>
+                <a href="documents/annual-report-2023-24.pdf" class="download-btn">
+                    <i class="fa fa-file-pdf-o"></i> Annual Report 2023-24
+                </a>
+            </div>
+        </section>
+    </main>
+    <!-- Footer Section -->
+    <footer>
+        <div class="container footer-container">
+            <div class="footer-left">
+                <h3>Contact Information</h3>
+                <div class="contact-info">
+                    <p><strong>Address:</strong> Kabra lane, Near bus stand Banahatti - 587311</p>
+                    <p><strong>Email:</strong> maheshpssnbnt112@gmail.com</p>
+                    <p><strong>Phone:</strong> +91 7760556454</p>
+                </div>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/share/1DGTsz97Rm/" title="Facebook">
+                        <img src="/images/fb-removebg-preview.png" alt="Facebook" width="32" height="32">
+                    </a>
+                    <a href="https://wa.me/917760556454" title="WhatsApp">
+                        <img src="/images/wp-removebg-preview.png" alt="WhatsApp" width="32" height="32">
+                    </a>
+                </div>
+            </div>
+            <div class="footer-right">
+                <h3>Working Hours</h3>
+                <div class="working-hours">
+                    <p><strong>Monday - Friday:</strong> 10:00 AM - 5:30 PM</p>
+                    <p><strong>Saturday:</strong> 10:00 AM - 2:00 PM</p>
+                    <p><strong>Sunday:</strong> Closed</p>
+                    <p><strong>Holidays:</strong> As per banking guidelines</p>
+                </div>
+            </div>
+        </div>
+        <div class="container" style="text-align: center; margin-top: 20px; font-size: 14px; color: #ddd;">
+            <p>Copyright &copy; 2025 Mahesh Pattin Souhard Sahakari Sangha Niyamit | Designed by Yashwardhan Chindak</p>
+        </div>
+    </footer>
+
+    <!-- Add Font Awesome for icons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></script>
+</body>
+</html>
